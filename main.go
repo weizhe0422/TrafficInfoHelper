@@ -14,15 +14,15 @@ var G_lineBotclient *linebot.Client
 
 func main() {
 	var(
-		//line_channel_secret string
-		//line_channel_token string
-		//httpClient *http.Client
-		//err error
+		line_channel_secret string
+		line_channel_token string
+		httpClient *http.Client
+		err error
 	)
 
 	log.Println("server starthe")
 
-	/*line_channel_secret = "c31afe4242e7247a5a0c59a9e8027655"
+	line_channel_secret = "c31afe4242e7247a5a0c59a9e8027655"
 	line_channel_token = "fO18hoQ45hl6YSvHCI/NY8uuEE3OBRvWRmoi+h6+FOOfNtJcLTv+OA49er/GYC0pZyS4fleFfgz87xR5ZFbyDDNn/9g2oHYfrMXeGOy706B3/zd4K43v6Bf+h/3VpIsOlLZU0tih7lRF5AusGMLPYwdB04t89/1O/w1cDnyilFU="
 
 
@@ -30,22 +30,22 @@ func main() {
 	if G_lineBotclient, err = linebot.New(line_channel_secret, line_channel_token, linebot.WithHTTPClient(httpClient)); err != nil{
 		log.Fatalf("failed to initial line bot: %v", err)
 		return
-	}*/
+	}
 
 	InitHttpServer()
 }
 
 func handleEvent(resp http.ResponseWriter, req *http.Request){
 	var(
-		//events []*linebot.Event
-		//event *linebot.Event
-		//err error
+		events []*linebot.Event
+		event *linebot.Event
+		err error
 	)
 	fmt.Println("handleEvent launched:", req)
 
-	//events = make([]*linebot.Event,0)
+	events = make([]*linebot.Event,0)
 
-	/*if events, err = G_lineBotclient.ParseRequest(req); err!=nil{
+	if events, err = G_lineBotclient.ParseRequest(req); err!=nil{
 		log.Fatalf("failed to parse request: %v", err)
 	}
 
@@ -57,7 +57,7 @@ func handleEvent(resp http.ResponseWriter, req *http.Request){
 			}
 		}
 	}
-*/
+
 	resp.Write([]byte("OK"))
 }
 

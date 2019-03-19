@@ -1,1 +1,1 @@
-web: ./TrafficInfoHelper
+web: main

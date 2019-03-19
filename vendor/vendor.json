@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "L+b8rXd/ZpkaTeEcXsqhh3pCZyE=",
+			"path": "github.com/line/line-bot-sdk-go/linebot",
+			"revision": "86c2e29d979408330aca9614afa173a29784228b",
+			"revisionTime": "2018-08-30T09:12:19Z"
+		}
+	],
+	"rootPath": "github.com/weizhe0422/TrafficInfoHelper"
+}

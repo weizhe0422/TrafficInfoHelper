@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/line/line-bot-sdk-go/linebot"
+	botEvents "github.com/weizhe0422/TrafficInfoHelper/events"
 	"log"
 	"net"
 	"net/http"
@@ -13,11 +14,11 @@ import (
 var G_lineBotclient *linebot.Client
 
 func main() {
-	var(
+	var (
 		line_channel_secret string
-		line_channel_token string
-		httpClient *http.Client
-		err error
+		line_channel_token  string
+		httpClient          *http.Client
+		err                 error
 	)
 
 	log.Println("server starthe")
@@ -25,9 +26,8 @@ func main() {
 	line_channel_secret = "c31afe4242e7247a5a0c59a9e8027655"
 	line_channel_token = "fO18hoQ45hl6YSvHCI/NY8uuEE3OBRvWRmoi+h6+FOOfNtJcLTv+OA49er/GYC0pZyS4fleFfgz87xR5ZFbyDDNn/9g2oHYfrMXeGOy706B3/zd4K43v6Bf+h/3VpIsOlLZU0tih7lRF5AusGMLPYwdB04t89/1O/w1cDnyilFU="
 
-
 	httpClient = &http.Client{}
-	if G_lineBotclient, err = linebot.New(line_channel_secret, line_channel_token, linebot.WithHTTPClient(httpClient)); err != nil{
+	if G_lineBotclient, err = linebot.New(line_channel_secret, line_channel_token, linebot.WithHTTPClient(httpClient)); err != nil {
 		log.Fatalf("failed to initial line bot: %v", err)
 		return
 	}
@@ -35,25 +35,29 @@ func main() {
 	InitHttpServer()
 }
 
-func handleEvent(resp http.ResponseWriter, req *http.Request){
-	var(
+func handleEvent(resp http.ResponseWriter, req *http.Request) {
+	var (
 		events []*linebot.Event
-		event *linebot.Event
-		err error
+		event  *linebot.Event
+		err    error
 	)
 	fmt.Println("handleEvent launched:", req)
 
-	events = make([]*linebot.Event,0)
+	events = make([]*linebot.Event, 0)
 
-	if events, err = G_lineBotclient.ParseRequest(req); err!=nil{
+	if events, err = G_lineBotclient.ParseRequest(req); err != nil {
 		log.Fatalf("failed to parse request: %v", err)
 	}
 
 	for _, event = range events {
-		if event.Type == linebot.EventTypeMessage{
+		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
+				switch message.Text {
+				case "@CPBL":
+					botEvents.EventCPBL(G_lineBotclient, event)
+				}
+				//G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
 			}
 		}
 	}
@@ -61,32 +65,32 @@ func handleEvent(resp http.ResponseWriter, req *http.Request){
 	resp.Write([]byte("OK"))
 }
 
-func InitHttpServer(){
-	var(
-		err error
+func InitHttpServer() {
+	var (
+		err      error
 		listener net.Listener
-		mux *http.ServeMux
-		httpSvr *http.Server
-		port string
+		mux      *http.ServeMux
+		httpSvr  *http.Server
+		port     string
 	)
 
 	port = os.Getenv("PORT")
-	if port == ""{
+	if port == "" {
 		port = "80"
 	}
 
-	if listener, err = net.Listen("tcp",":"+port); err!=nil{
+	if listener, err = net.Listen("tcp", ":"+port); err != nil {
 		return
 	}
 
 	fmt.Println("port:", port)
 	mux = http.NewServeMux()
-	mux.HandleFunc("/callback",handleEvent)
+	mux.HandleFunc("/callback", handleEvent)
 
 	httpSvr = &http.Server{
-		ReadTimeout: 5000 * time.Millisecond,
+		ReadTimeout:  5000 * time.Millisecond,
 		WriteTimeout: 5000 * time.Millisecond,
-		Handler: mux,
+		Handler:      mux,
 	}
 	httpSvr.Serve(listener)
 }

@@ -55,14 +55,13 @@ func handleEvent(resp http.ResponseWriter, req *http.Request) {
 			case *linebot.TextMessage:
 				switch message.Text {
 				case "@CPBL":
-					G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("@CPBL@")).Do()
 					botEvents.EventCPBL(G_lineBotclient, event)
 				}
-				G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("@CPBL@@")).Do()
 				G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
 			}
 		}
 	}
+	//traffic-info-helper.herokuapp.com/callback
 
 	resp.Write([]byte("OK"))
 }

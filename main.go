@@ -57,7 +57,7 @@ func handleEvent(resp http.ResponseWriter, req *http.Request) {
 				case "@CPBL":
 					botEvents.EventCPBL(G_lineBotclient, event)
 				}
-				//G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
+				G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
 			}
 		}
 	}

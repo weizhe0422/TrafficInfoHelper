@@ -17,11 +17,14 @@ func EventTHSR(client *linebot.Client, event *linebot.Event) {
 		err         error
 		replyMsg    strings.Builder
 	)
+	log.Println("enter into EventTHSR")
 
 	stationInfo = InitStation()
 	if stations, err = stationInfo.GetStations(); err != nil {
 		return
 	}
+	log.Println("stations:", stations)
+
 	for idx, station := range stations {
 		replyMsg.WriteString(station[idx].StationName.ZhTw)
 	}

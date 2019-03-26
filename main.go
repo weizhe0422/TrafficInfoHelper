@@ -55,7 +55,6 @@ func handleEvent(resp http.ResponseWriter, req *http.Request) {
 			case *linebot.TextMessage:
 				switch message.Text {
 				case "@THSR":
-					G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("XXXX")).Do()
 					botEvents.EventTHSR(G_lineBotclient, event)
 				}
 				G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()

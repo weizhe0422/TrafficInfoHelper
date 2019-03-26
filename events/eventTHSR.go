@@ -25,8 +25,8 @@ func EventTHSR(client *linebot.Client, event *linebot.Event) {
 	}
 	log.Println("stations:", stations)
 
-	for idx, station := range stations {
-		replyMsg.WriteString(station[idx].StationName.ZhTw)
+	for _, station := range stations {
+		replyMsg.WriteString(station.StationName.ZhTw)
 	}
 	client.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMsg.String())).Do()
 }
@@ -53,6 +53,9 @@ func (s *Station) GetStations() ([]dataBean.THSRStationInfo, error) {
 		log.Printf("failed to get response from %v, error is %v", resource.URLTHSRStationInfo, err)
 		return nil, err
 	}
+
+	log.Println("URL:", resource.URLTHSRStationInfo)
+	log.Println("respContent:", string(respContent))
 
 	if err = json.Unmarshal(respContent, &jsonResult); err != nil {
 		log.Printf("failed to unmarshall response: %v", err)

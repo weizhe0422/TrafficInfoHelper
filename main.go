@@ -54,8 +54,8 @@ func handleEvent(resp http.ResponseWriter, req *http.Request) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				switch message.Text {
-				case "@CPBL":
-					botEvents.EventCPBL(G_lineBotclient, event)
+				case "@THSR":
+					botEvents.EventTHSR(G_lineBotclient, event)
 				}
 				G_lineBotclient.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
 			}

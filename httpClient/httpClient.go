@@ -23,7 +23,7 @@ func (c *Client) GetHttpResp() (respBody []byte, err error) {
 	var (
 		client   *http.Client
 		request  *http.Request
-		response []http.Response
+		response *http.Response
 	)
 
 	client = &http.Client{}

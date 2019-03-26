@@ -21,7 +21,7 @@ func main() {
 		err                 error
 	)
 
-	log.Println("server starthe")
+	log.Println("server start")
 
 	line_channel_secret = "c31afe4242e7247a5a0c59a9e8027655"
 	line_channel_token = "fO18hoQ45hl6YSvHCI/NY8uuEE3OBRvWRmoi+h6+FOOfNtJcLTv+OA49er/GYC0pZyS4fleFfgz87xR5ZFbyDDNn/9g2oHYfrMXeGOy706B3/zd4K43v6Bf+h/3VpIsOlLZU0tih7lRF5AusGMLPYwdB04t89/1O/w1cDnyilFU="

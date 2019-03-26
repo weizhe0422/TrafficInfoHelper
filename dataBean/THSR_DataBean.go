@@ -2,7 +2,7 @@ package dataBean
 
 import "time"
 
-type THSRStationInfo []struct {
+type THSRStationInfo struct {
 	StationUID  string `json:"StationUID"`
 	StationID   string `json:"StationID"`
 	StationName struct {
